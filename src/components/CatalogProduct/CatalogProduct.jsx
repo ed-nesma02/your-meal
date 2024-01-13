@@ -1,8 +1,11 @@
+import { useDispatch } from "react-redux";
 import { API_URI } from "../../const/API";
 import s from "./CatalogProduct.module.css";
 import PropTypes from "prop-types";
+import { addProduct } from "../../store/order/orderSlice";
 
 export const CatalogProduct = ({ title, id, price, weight, image }) => {
+  const dispatch = useDispatch();
   return (
     <article className={s.product}>
       <img
@@ -20,7 +23,12 @@ export const CatalogProduct = ({ title, id, price, weight, image }) => {
         </button>
       </h3>
       <p className={s.product__weight}>{`${weight}г`}</p>
-      <button className={s.product__add} type="button">
+      <button
+        className={s.product__add}
+        type="button"
+        onClick={() => {
+          dispatch(addProduct({ id }));
+        }}>
         Добавить
       </button>
     </article>

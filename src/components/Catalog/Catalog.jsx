@@ -9,11 +9,12 @@ import { productsRequestAsync } from "../../store/product/productSlice";
 export const Catalog = () => {
   const { products } = useSelector((state) => state.products);
   const { activeCategory, category } = useSelector((state) => state.category);
-  console.log("activeCategory: ", category[activeCategory]?.title);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(productsRequestAsync(category[activeCategory]?.title));
+    if (category.length) {
+      dispatch(productsRequestAsync(category[activeCategory]?.title));
+    }
   }, [activeCategory, category]);
 
   return (
@@ -22,15 +23,18 @@ export const Catalog = () => {
         <Order />
         <div className={s.catalog__wrapper}>
           <h2 className={s.catalog__title}>{category[activeCategory]?.rus}</h2>
-
           <div className={s.catalog__wrap_list}>
-            <ul className={s.catalog__list}>
-              {products?.map((item) => (
-                <li key={item.id} className={s.catalog__item}>
-                  <CatalogProduct {...item} />
-                </li>
-              ))}
-            </ul>
+            {products.length ? (
+              <ul className={s.catalog__list}>
+                {products?.map((item) => (
+                  <li key={item.id} className={s.catalog__item}>
+                    <CatalogProduct {...item} />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>К сожалению товаров данной категории нет</p>
+            )}
           </div>
         </div>
       </Container>
