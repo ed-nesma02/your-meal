@@ -67,7 +67,7 @@ export const Footer = () => {
               Design: <a href="#">Anastasia Ilina</a>
             </p>
             <p>
-              Developer: <a href="https://t.me/nesma02">Eduard Nesmashnyui</a>
+              Developer: <a href="https://t.me/nesma02">Eduard Nesmashnyi</a>
             </p>
           </div>
         </div>
