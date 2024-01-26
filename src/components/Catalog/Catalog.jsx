@@ -4,7 +4,7 @@ import { Container } from "../Container/Container";
 import { Order } from "../Order/Order";
 import s from "./Catalog.module.css";
 import { useEffect } from "react";
-import { productsRequestAsync } from "../../store/product/productSlice";
+import { productsRequestAsync } from "../../store/products/productsSlice";
 
 export const Catalog = () => {
   const { products } = useSelector((state) => state.products);
@@ -15,7 +15,7 @@ export const Catalog = () => {
     if (category.length) {
       dispatch(productsRequestAsync(category[activeCategory]?.title));
     }
-  }, [activeCategory, category]);
+  }, [dispatch, activeCategory, category]);
 
   return (
     <section className={s.catalog}>

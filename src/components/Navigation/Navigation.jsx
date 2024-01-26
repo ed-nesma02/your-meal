@@ -14,7 +14,7 @@ export const Navigation = () => {
 
   useEffect(() => {
     dispatch(categoryRequestAsync());
-  }, []);
+  }, [dispatch]);
 
   return (
     <nav className={s.navigation}>

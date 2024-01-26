@@ -3,36 +3,34 @@ import axios from "axios";
 import { API_URI, POSTFIX } from "../../const/API";
 
 const initialState = {
-  products: [],
+  product: {},
   error: "",
   status: "idle",
 };
 
-export const productsRequestAsync = createAsyncThunk(
-  "products/fetch",
-  (category) => {
-    return axios(`${API_URI}${POSTFIX}?category=${category}`).then(
-      ({ data }) => data,
-    );
+export const productRequestAsync = createAsyncThunk(
+  "product/fetch",
+  ({ id }) => {
+    return axios(`${API_URI}${POSTFIX}/${id}`).then(({ data }) => data);
   },
 );
 
 const productSlice = createSlice({
-  name: "products",
+  name: "product",
   initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(productsRequestAsync.pending, (state) => {
+      .addCase(productRequestAsync.pending, (state) => {
         state.status = "pending";
         state.error = "";
       })
-      .addCase(productsRequestAsync.fulfilled, (state, action) => {
-        state.products = action.payload;
+      .addCase(productRequestAsync.fulfilled, (state, action) => {
+        state.product = action.payload;
         state.status = "fulfilled";
         state.error = "";
       })
-      .addCase(productsRequestAsync.rejected, (state, action) => {
-        state.products = [];
+      .addCase(productRequestAsync.rejected, (state, action) => {
+        state.product = {};
         state.status = "rejected";
         state.error = action.error;
       });

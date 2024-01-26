@@ -23,8 +23,8 @@ export const localStorageMiddleware = (store) => (next) => (action) => {
 };
 
 export const orderRequestAsync = createAsyncThunk(
-  "ordrer/orderRequestAsync",
-  (_, { getState }) => {
+  "order/orderRequestAsync",
+  async (_, { getState }) => {
     const listId = getState().order.orderList.map((item) => item.id);
 
     return axios(`${API_URI}${POSTFIX}?list=${listId}`).then(
@@ -43,7 +43,6 @@ const orderSlice = createSlice({
       );
       if (productOrderList) {
         productOrderList.count += 1;
-        console.log(productOrderList.count);
         const productOrderGoods = state.orderGoods.find(
           (item) => item.id === action.payload.id,
         );
@@ -51,7 +50,10 @@ const orderSlice = createSlice({
         productOrderGoods.count = productOrderList.count;
         [state.totalCount, state.totalPrice] = calcTotal(state.orderGoods);
       } else {
-        state.orderList.push({ ...action.payload, count: 1 });
+        state.orderList.push({
+          ...action.payload,
+          count: action.payload.count ? action.payload.count : 1,
+        });
       }
     },
     removeProduct: (state, action) => {
@@ -86,7 +88,6 @@ const orderSlice = createSlice({
           const product = action.payload.find(
             (product) => product.id === item.id,
           );
-
           product.count = item.count;
           return product;
         });
