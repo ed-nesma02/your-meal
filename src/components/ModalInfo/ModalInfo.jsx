@@ -17,7 +17,7 @@ export const ModalInfo = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(productRequestAsync({ id }));
+    if (id) dispatch(productRequestAsync({ id }));
   }, [dispatch, id]);
 
   return (

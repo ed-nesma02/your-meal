@@ -65,6 +65,11 @@
   font-size: 12px;
   line-height: 100%;
   color: #FFFFFF;
+  transition: all 0.2s ease-in-out;
+}
+
+.mproduct__btn:hover{
+  background-color: #FFAB08;
 }
 
 .mproduct__price {

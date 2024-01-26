@@ -42,7 +42,9 @@ const orderSlice = createSlice({
         (item) => item.id === action.payload.id,
       );
       if (productOrderList) {
-        productOrderList.count += 1;
+        productOrderList.count = action.payload.count
+          ? productOrderList.count + action.payload.count
+          : productOrderList.count + 1;
         const productOrderGoods = state.orderGoods.find(
           (item) => item.id === action.payload.id,
         );
