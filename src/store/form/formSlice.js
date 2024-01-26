@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_URI } from "../../const/API";
+import { clearOrder } from "../order/orderSlice";
 
 const initialState = {
   name: "",
@@ -12,15 +13,21 @@ const initialState = {
 
 export const submitForm = createAsyncThunk(
   "form/submitForm",
-  async (data, { rejectWithValue }) => {
+  async (data, { dispatch, rejectWithValue }) => {
     try {
-      await fetch(`${API_URI}/api/order`, {
+      const response = await fetch(`${API_URI}/api/order`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
+
+      if (!response.ok) {
+        throw new Error("Не удалось оформить заказ");
+      }
+      dispatch(clearOrder());
+      return response.json();
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -33,6 +40,14 @@ const formSlice = createSlice({
   reducers: {
     updateValue: (state, action) => {
       state[action.payload.field] = action.payload.value;
+    },
+    resetForm: (state) => {
+      state.name = "";
+      state.phone = "";
+      state.format = "delivery";
+      state.address = "";
+      state.floor = "";
+      state.intercom = "";
     },
   },
   extraReducers: (builder) =>
@@ -52,5 +67,5 @@ const formSlice = createSlice({
       }),
 });
 
-export const { updateValue } = formSlice.actions;
+export const { updateValue, resetForm } = formSlice.actions;
 export default formSlice.reducer;

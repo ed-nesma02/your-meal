@@ -3,7 +3,7 @@ import style from "./ModalDelivery.module.css";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../store/modalDelivery/modalDeliverySlice";
-import { submitForm, updateValue } from "../../store/form/formSlice";
+import { resetForm, submitForm, updateValue } from "../../store/form/formSlice";
 
 export const ModalDelivery = () => {
   const { isOpen } = useSelector((state) => state.modal);
@@ -22,8 +22,9 @@ export const ModalDelivery = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ ...form, orderList });
     dispatch(submitForm({ ...form, orderList }));
+    dispatch(closeModal());
+    dispatch(resetForm());
   };
 
   return (
@@ -49,6 +50,7 @@ export const ModalDelivery = () => {
                   value={form.name}
                   placeholder="Ваше имя"
                   onChange={handeInputChange}
+                  required
                 />
                 <input
                   className={style.input}
@@ -57,6 +59,7 @@ export const ModalDelivery = () => {
                   value={form.phone}
                   placeholder="Телефон"
                   onChange={handeInputChange}
+                  required
                 />
               </fieldset>
 
@@ -95,6 +98,7 @@ export const ModalDelivery = () => {
                     value={form.address}
                     placeholder="Улица, дом, квартира"
                     onChange={handeInputChange}
+                    required
                   />
                   <input
                     className={classNames(style.input, style.input_half)}
@@ -103,6 +107,7 @@ export const ModalDelivery = () => {
                     value={form.floor}
                     placeholder="Этаж"
                     onChange={handeInputChange}
+                    required
                   />
                   <input
                     className={classNames(style.input, style.input_half)}
@@ -111,6 +116,7 @@ export const ModalDelivery = () => {
                     value={form.intercom}
                     placeholder="Домофон"
                     onChange={handeInputChange}
+                    required
                   />
                 </fieldset>
               ) : (
