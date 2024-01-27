@@ -1,5 +1,6 @@
 .modal {
   position: fixed;
+  z-index: 3;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.8);
   cursor: pointer;

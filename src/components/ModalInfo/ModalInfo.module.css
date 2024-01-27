@@ -1,3 +1,13 @@
+.modal {
+  position: fixed;
+  z-index: 2;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+  overflow-y: auto;
+  display: flex;
+}
+
 .mproduct {
   position: relative;
   background-color: #FFFFFF;
@@ -77,15 +87,6 @@
   font-weight: 600;
   font-size: 16px;
   line-height: 130%;
-}
-
-.modal {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.8);
-  cursor: pointer;
-  overflow-y: auto;
-  display: flex;
 }
 
 .modal__close {
